@@ -8,15 +8,13 @@ export function Main() {
 
     const HandleStars = (vote) => {
         const stars = Math.min(Math.ceil(vote / 2), 5);
-        const starIcons = [];
 
-        for (let i = 0; i < stars; i++) {
-            starIcons.push(<i key={i} className="fas fa-star"></i>);
-        }
+        const fullStars = Array(stars).fill(<i className="fas fa-star"></i>);
+        const emptyStars = Array(5 - stars).fill(<i className="far fa-star"></i>);
 
-        for (let i = stars; i < 5; i++) {
-            starIcons.push(<i key={i} className="far fa-star"></i>);
-        }
+        const starIcons = [...fullStars, ...emptyStars].map((icon, index) => (
+            <span key={index}>{icon}</span>
+        ));
 
         return <>{starIcons}</>;
     };
@@ -26,7 +24,6 @@ export function Main() {
         return `${imageBaseUrl}${size}${path}`;
     };
 
-    
     const getFlag = (lang) => {
         return <Flag code={lang.toUpperCase()} alt={lang} width={20} height={15} />;
     };
@@ -45,7 +42,6 @@ export function Main() {
                             />
                             <div className="card-info">
                                 <h3>{elem.title}</h3>
-                              
                                 <p>{getFlag(elem.original_language)}</p> 
                                 <div className="stars">{HandleStars(elem.vote_average)}</div>
                                 <p>{elem.overview}</p>
@@ -56,6 +52,9 @@ export function Main() {
                     <p>Nessun film trovato.</p>
                 )}
             </div>
+
+            
+            <hr className="section-divider" />
 
             <h2>Serie TV</h2>
             <div className="card-container">
@@ -69,7 +68,6 @@ export function Main() {
                             />
                             <div className="card-info">
                                 <h3>{elem.name}</h3>
-                               
                                 <p>{getFlag(elem.original_language)}</p> 
                                 <div className="stars">{HandleStars(elem.vote_average)}</div>
                                 <p>{elem.overview}</p>
